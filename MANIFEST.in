@@ -1,0 +1,4 @@
+include README.mkd
+include MANIFEST.in
+include LICENSE
+recursive-include fabric_common *
