@@ -2,9 +2,9 @@ import os
 from tempfile import mkdtemp
 from fabric.api import cd, local, put, run, sudo
 
-def upload_project(local_dir=None, remote_dir="", use_sudo=False):
+def fast_upload(local_dir=None, remote_dir="", use_sudo=False):
     """
-    Upload the current project to a remote system via ``tar``/``gzip``.
+    Upload the ``local_dir`` to a remote system via ``tar``/``gzip``.
 
     ``local_dir`` specifies the local project directory to upload, and defaults
     to the current working directory.
