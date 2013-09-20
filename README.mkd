@@ -1,3 +1,47 @@
-# Fabric library
+# Kosher
 
-Basic feature sets for my preferred fabric development.
+Kosher provides easy way to manage your (python) website.
+It includes an easy to use project information manager,
+virtual environment manager, and fast uploader.
+Here's a quick example of a fabfile using kosher:
+
+    import kosher.projects
+    import kosher.virtualenv
+
+
+    project_info = kosher.projects.ProjectInfo('example',
+      os.path.abspath(os.path.join(os.path.dirname(__file__), '..')),
+      remote_temp_top='/tmp/example')
+
+    kosher.virtualenv.config['path'] = project_info.virtual_environment
+    kosher.virtualenv.config['sudo'] = True
+    user='example'
+
+    @task
+    def prod():
+      cuisine.mode_sudo()
+      env.hosts = ['127.0.0.1']
+
+    @task
+    def ensure_users_and_groups():
+      cuisine.user_ensure( name=user )
+
+    @task
+    def ensure_directory_structure():
+      cuisine.dir_ensure( project_info.remote_temp_top, recursive=True, owner=user )
+      cuisine.dir_ensure( project_info.project_directory, recursive=True, owner=user )
+
+    @task
+    def ensure_virtualenv():
+      cuisine.python_package_ensure('virtualenv')
+      kosher.virtualenv.setup()
+
+    @task
+    def setup():
+      ensure_users_and_groups()
+      ensure_directory_structure()
+      ensure_virtualenv()
+      directory = os.path.join(os.path.dirname(__file__), project)
+      kosher.projects.fast_upload(directory, project_info.project_directory, use_sudo=True)
+
+NOTE: kosher is meant to be used in conjunction with cuisine.

@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import sys
 
-module = __import__('fabric_common')
+module = __import__('kosher')
 
 readme_file = 'README.mkd'
 try:
@@ -11,9 +11,9 @@ except IOError, err:
         "``long_description`` (%s)\n" % readme_file)
     sys.exit(1)
 
-setup(name='fabric-common',
+setup(name='kosher',
       version=module.get_version(),
-      description='Extra stuff for fabric',
+      description='Virtual environment, project information, and utilities handling for fabric.',
       long_description=long_description,
       zip_safe=False,
       author='Abraham Elmahrek',
@@ -21,11 +21,11 @@ setup(name='fabric-common',
       packages = find_packages(),
       include_package_data=True,
       install_requires = [
-        # 'fabric>=1.5',
+        'fabric', 'cuisine'
       ],
       classifiers = ['Development Status :: 1 - Planning',
                      'Environment :: Console',
-                     # 'Framework :: Fabric',
+                     'Framework :: Fabric',
                      'Intended Audience :: Developers',
                      'License :: OSI Approved :: BSD License',
                      'Operating System :: OS Independent',
