@@ -2,6 +2,7 @@ import os
 from tempfile import mkdtemp
 from fabric.api import cd, local, put, run, sudo
 
+
 def fast_upload(local_dir=None, remote_dir="", use_sudo=False):
     """
     Upload the ``local_dir`` to a remote system via ``tar``/``gzip``.
@@ -49,7 +50,7 @@ class ProjectInfo(object):
     """
     Manages common paths locally and remotely.
     """
-    def __init__(self, project_name, local_top, remote_top='/opt', remote_temp_top='/tmp', virtual_environment_top='/opt/virtualenvs'):
+    def __init__(self, project_name, local_top, remote_top='/opt', remote_temp_top='/tmp', virtual_environment_name='virtualenv'):
         """
         Remote paths will contain 'remote_top' and 'project_name' usually.
         Only temporary files will be exluded from this.
@@ -62,7 +63,7 @@ class ProjectInfo(object):
         self.remote_top = remote_top
         self.remote_temp_top = remote_temp_top
         self.temp_directory = self.remote_temp_top
-        self.virtual_environment_top = virtual_environment_top
+        self.virtual_environment_name = virtual_environment_name
         self.__subprojects = []
 
     @property
@@ -100,7 +101,7 @@ class ProjectInfo(object):
         """
         Location of virtual environment remotely.
         """
-        return os.path.join(self.virtual_environment_top, self.project_name)
+        return os.path.join(self.project_directory, self.virtual_environment_name)
 
     def get_subproject_directory(self, subproject):
         """
